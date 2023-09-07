@@ -47,11 +47,11 @@ module ALU
       6'b000010: o_ALUResult <= (i_A >> (i_B[4:0]));    // SRL (Shift Right Logical)
       6'b100111: o_ALUResult <= ~(i_A | i_B);   // NOR
       //JAMAS OLVIDARES EL DEFAULT!!!!! si uno se lo olvida, el sintetizador hace cualquier cosa.. crea compuertas flipflops etc.. No queremos un comportamiento anómalo
-      default: o_ALUResult <= 8'b0;
+      default: o_ALUResult <= {p_operatorsInputSize{'b0}};
     endcase
   end
 
-  assign Zero = (o_ALUResult == 8'b0)?1'b1:1'b0;
+  assign o_Zero = (o_ALUResult == {p_operatorsInputSize{'b0}})?1'b1:1'b0;
   //assign Overflow = (i_A[31] & i_B[31] & ~o_ALUResult[31]) | (~i_A[31] & ~i_B[31] & o_ALUResult[31]);
 endmodule
 
