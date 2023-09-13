@@ -3,6 +3,8 @@
 /_xmsgs/
 /TP1-ALU.cache/
 /TP1-ALU.hw/
+/TP1-ALU.runs/
+/TP1-ALU.gen/
 /TP1-ALU.ip_user_files/
 /TP1-ALU.sim/
 *.log
