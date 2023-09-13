@@ -19,23 +19,25 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+`define dataLength 8
+`define opLength 6
 
 module topLevelAlu(
     //inputs
-    input wire switch,
+    input wire [`dataLength - 1 : 0] switch,
     input wire button1,//para A
     input wire button2,//para B
     input wire button3,//para OPCODE
     input wire clockCustom,
     
-    output wire LED,
+    output wire LED
     
     //para el clock
-    input wire resetGral
+    //input wire resetGral
     );
     
-    parameter dataLength=8;
-    parameter opLength=6;
+    parameter dataLength=`dataLength;
+    parameter opLength=`opLength;
     
     reg signed [dataLength-1 : 0] dataA = 0;
 	reg signed [dataLength-1 : 0] dataB = 0;

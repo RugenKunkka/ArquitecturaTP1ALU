@@ -14,11 +14,10 @@ set_property -dict { PACKAGE_PIN E3    IOSTANDARD LVCMOS33 } [get_ports { clockC
 #create_clock -add -name sys_clk_pin -period 10.00 -waveform {0 5} [get_ports {i_clock_top}]; # implica un clock de systema de 100MHz. Alimenta el clk wizard
 
 ##Switches
-
-#set_property -dict { PACKAGE_PIN A8    IOSTANDARD LVCMOS33 } [get_ports { i_switches }]; #IO_L12N_T1_MRCC_16 Sch=sw[0]
-#set_property -dict { PACKAGE_PIN C11   IOSTANDARD LVCMOS33 } [get_ports { sw[1] }]; #IO_L13P_T2_MRCC_16 Sch=sw[1]
-#set_property -dict { PACKAGE_PIN C10   IOSTANDARD LVCMOS33 } [get_ports { sw[2] }]; #IO_L13N_T2_MRCC_16 Sch=sw[2]
-#set_property -dict { PACKAGE_PIN A10   IOSTANDARD LVCMOS33 } [get_ports { sw[3] }]; #IO_L14P_T2_SRCC_16 Sch=sw[3]
+set_property -dict { PACKAGE_PIN A8    IOSTANDARD LVCMOS33 } [get_ports { switch[0] }]; #IO_L12N_T1_MRCC_16 Sch=sw[0]
+set_property -dict { PACKAGE_PIN C11   IOSTANDARD LVCMOS33 } [get_ports { switch[1] }]; #IO_L13P_T2_MRCC_16 Sch=sw[1]
+set_property -dict { PACKAGE_PIN C10   IOSTANDARD LVCMOS33 } [get_ports { switch[2] }]; #IO_L13N_T2_MRCC_16 Sch=sw[2]
+set_property -dict { PACKAGE_PIN A10   IOSTANDARD LVCMOS33 } [get_ports { switch[3] }]; #IO_L14P_T2_SRCC_16 Sch=sw[3]
 
 ##RGB LEDs
 
@@ -40,16 +39,16 @@ set_property -dict { PACKAGE_PIN E3    IOSTANDARD LVCMOS33 } [get_ports { clockC
 
 ## Green LEDs
 
-#set_property -dict {PACKAGE_PIN H5 IOSTANDARD LVCMOS33} [get_ports o_led[0]]
-#set_property -dict {PACKAGE_PIN J5 IOSTANDARD LVCMOS33} [get_ports o_led[1]]
-#set_property -dict {PACKAGE_PIN T9 IOSTANDARD LVCMOS33} [get_ports o_led[2]]
-#set_property -dict {PACKAGE_PIN T10 IOSTANDARD LVCMOS33} [get_ports o_led[3]]
+set_property -dict {PACKAGE_PIN H5 IOSTANDARD LVCMOS33} [get_ports LED[0]]
+set_property -dict {PACKAGE_PIN J5 IOSTANDARD LVCMOS33} [get_ports LED[1]]
+set_property -dict {PACKAGE_PIN T9 IOSTANDARD LVCMOS33} [get_ports LED[2]]
+set_property -dict {PACKAGE_PIN T10 IOSTANDARD LVCMOS33} [get_ports LED[3]]
 
 ##Buttons
-set_property -dict {PACKAGE_PIN D9 IOSTANDARD LVCMOS33} [get_ports resetGral]
-#set_property -dict { PACKAGE_PIN C9    IOSTANDARD LVCMOS33 } [get_ports i_btn2]; #IO_L11P_T1_SRCC_16 Sch=btn[1]
-#set_property -dict { PACKAGE_PIN B9    IOSTANDARD LVCMOS33 } [get_ports i_btn3]; #IO_L11N_T1_SRCC_16 Sch=btn[2]
-#set_property -dict { PACKAGE_PIN B8    IOSTANDARD LVCMOS33 } [get_ports i_reset]; #IO_L12P_T1_MRCC_16 Sch=btn[3]
+#set_property -dict {PACKAGE_PIN D9 IOSTANDARD LVCMOS33} [get_ports resetGral]
+set_property -dict { PACKAGE_PIN C9    IOSTANDARD LVCMOS33 } [get_ports button1]; #IO_L11P_T1_SRCC_16 Sch=btn[1]
+set_property -dict { PACKAGE_PIN B9    IOSTANDARD LVCMOS33 } [get_ports button2]; #IO_L11N_T1_SRCC_16 Sch=btn[2]
+set_property -dict { PACKAGE_PIN B8    IOSTANDARD LVCMOS33 } [get_ports button3]; #IO_L12P_T1_MRCC_16 Sch=btn[3]
 
 ##Pmod Header JA
 
