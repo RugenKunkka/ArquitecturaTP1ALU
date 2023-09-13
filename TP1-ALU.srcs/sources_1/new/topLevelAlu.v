@@ -30,7 +30,7 @@ module topLevelAlu(
     input wire button3,//para OPCODE
     input wire clockCustom,
     
-    output wire LED
+    output wire [`dataLength - 1 : 0]LED
     
     //para el clock
     //input wire resetGral
