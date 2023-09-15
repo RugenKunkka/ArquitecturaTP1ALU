@@ -1,67 +1,103 @@
 `timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 09/06/2023 12:55:35 PM
+// Design Name: 
+// Module Name: TestBench_ALU
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
 
 `define dataLength 4
 `define opLength 4
 
-module topLevelAlu(
-    //inputs
-    input wire [`dataLength - 1 : 0] switch,
-    input wire button1,//para A
-    input wire button2,//para B
-    input wire button3,//para OPCODE
-    input wire clockCustom,
-    input wire resetGral,
-    
-    output wire [`dataLength - 1 : 0]LED
-    );
-    
+module TestBench_ALU();
+
     parameter dataLength=`dataLength;
     parameter opLength=`opLength;
     
-    reg signed [dataLength-1 : 0] dataA = 0;
-	reg signed [dataLength-1 : 0] dataB = 0;
-	reg [opLength-1 : 0] OPCODE = 0;
-	
-	
-	ALU #(.p_dataLength(dataLength))
-	u_alu(
-		.i_A(dataA),
-		.i_B(dataB),
-		.i_ALUBitsControl(OPCODE),
-		.o_ALUResult(LED)
-		);
-		
-	/*always @(resetGral) begin
-	   dataA <= {dataLength{1'b0}};	
-       dataB <= {dataLength{1'b0}};
-       OPCODE <= {dataLength{1'b0}};
-	end*/
-	
-    always @(posedge clockCustom)
-	begin
-	    /*if(resetGral==1'b1)
-	       begin
-	           dataA <= {dataLength{1'b0}};	
-               dataB <= {dataLength{1'b0}};
-               OPCODE <= {dataLength{1'b0}};
-	       end
-	    else
-	       begin*/
-            if (button1 == 1'b1) begin//&& o_locked saco esto de todos los ifs else ifs
-                dataA = switch;			
-            end
-            else if (button2 == 1'b1) begin
-                dataB = switch;			
-            end
-            else if (button3 == 1'b1) begin
-                OPCODE = switch;
-            end
-            else begin
-                dataA = dataA;	
-                dataB = dataB;
-                OPCODE = OPCODE;
-            end
-        //end
-	end
+    //todos los input wire pasan a reg
+    reg [dataLength-1:0] _i_A;
+    reg [dataLength-1:0] _i_B;
+    reg [opLength-1:0] _i_ALUBitsControl;
     
+    //todos los output pasan a wire
+    wire [dataLength-1:0] _o_ALUResult;
+    wire  _o_Zero;
+
+    //instancio el m?dulo de la ALU
+    //uut= unit under test 
+    ALU #(
+        .p_operatorsInputSize(4)
+    ) 
+    uut_ALU (
+        .i_A(_i_A),
+        .i_B(_i_B),
+        .i_ALUBitsControl(_i_ALUBitsControl),
+        .o_ALUResult(_o_ALUResult),
+        .o_Zero(_o_Zero)
+    );
+
+    /*localparam ADD = 6'b100000;
+    localparam SUB = 6'b100010;
+    localparam AND = 6'b100100;
+    localparam OR  = 6'b100101;
+    localparam XOR = 6'b100110;
+    localparam SRA = 6'b000011;
+    localparam SRL = 6'b000010;
+    localparam NOR = 6'b100111;*/
+    
+    localparam ADD = 4'b0001;
+    localparam SUB = 4'b0010;
+    localparam AND = 4'b0011;
+    localparam OR  = 4'b0101;
+    localparam XOR = 4'b0111;
+    localparam SRA = 4'b1000;
+    localparam SRL = 4'b1100;
+    localparam NOR = 4'b1110;
+
+  
+initial
+begin
+    #0
+    _i_A = {dataLength{1'b0}};
+    _i_B = {dataLength{1'b0}};
+    #50
+    _i_ALUBitsControl = ADD;
+    #50
+    _i_ALUBitsControl = SUB;
+    #50
+    _i_ALUBitsControl = AND;
+    #50
+    _i_ALUBitsControl = OR;
+    #50
+    _i_ALUBitsControl = XOR;
+    #50
+    _i_ALUBitsControl = SRA;
+    #50
+    _i_ALUBitsControl = SRL;
+    #50
+    _i_ALUBitsControl = NOR;
+       
+end
+
+// Genera numeros aleatorios cada 60 steps del simulador
+always begin
+  #60
+    _i_A = $random;
+    _i_B = $random;
+  end
+
 endmodule
