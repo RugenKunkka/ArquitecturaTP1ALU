@@ -40,7 +40,6 @@ module TestBech_top;
 //instancio el módulo de la ALU
 //uut= unit under test 
 topLevelAlu #(
-    .p_operatorsInputSize(8)
   ) 
   u_topLevelAlu (
     .switch(i_topTb_switch),
@@ -63,7 +62,7 @@ localparam NOR = 4'b1110;
 
 initial
 begin
-#100
+#2500
 //suma 1+1
     //i_topTb_switch = dataLength'd1;
     i_topTb_switch = 4'd1;

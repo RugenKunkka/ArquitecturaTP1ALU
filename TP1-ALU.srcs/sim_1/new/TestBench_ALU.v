@@ -35,7 +35,7 @@ module TestBench_ALU();
     
     //todos los output pasan a wire
     wire [dataLength-1:0] _o_ALUResult;
-    wire  _o_Zero;
+    //wire  _o_Zero;
 
     //instancio el m?dulo de la ALU
     //uut= unit under test 
@@ -46,8 +46,8 @@ module TestBench_ALU();
         .i_A(_i_A),
         .i_B(_i_B),
         .i_ALUBitsControl(_i_ALUBitsControl),
-        .o_ALUResult(_o_ALUResult),
-        .o_Zero(_o_Zero)
+        .o_ALUResult(_o_ALUResult)//,
+        //.o_Zero(_o_Zero)
     );
 
     /*localparam ADD = 6'b100000;

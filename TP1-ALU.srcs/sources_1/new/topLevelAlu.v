@@ -18,50 +18,70 @@ module topLevelAlu(
     parameter dataLength=`dataLength;
     parameter opLength=`opLength;
     
-    reg signed [dataLength-1 : 0] dataA = 0;
-	reg signed [dataLength-1 : 0] dataB = 0;
-	reg [opLength-1 : 0] OPCODE = 0;
+    reg signed [dataLength-1 : 0] reg_dataA;
+	reg signed [dataLength-1 : 0] reg_dataB;
+	reg [opLength-1 : 0] reg_OPCODE;
+	
+	wire signed [dataLength-1 : 0] wire_dataA;
+	wire signed [dataLength-1 : 0] wire_dataB;
+	wire [opLength-1 : 0] wire_OPCODE;
 	
 	
+	
+	wire o_clockWizzard;
+	wire o_locked;
 	ALU #(.p_dataLength(dataLength))
 	u_alu(
-		.i_A(dataA),
-		.i_B(dataB),
-		.i_ALUBitsControl(OPCODE),
-		.o_ALUResult(LED)
+		.i_A(wire_dataA),
+		.i_B(wire_dataB),
+		.i_ALUBitsControl(wire_OPCODE),
+		.o_ALUResult(LED)//,
+		//.o_Zero()
 		);
-		
-	/*always @(resetGral) begin
-	   dataA <= {dataLength{1'b0}};	
-       dataB <= {dataLength{1'b0}};
-       OPCODE <= {dataLength{1'b0}};
-	end*/
+    clk_wiz_0
+	u_clk(
+        // Clock out ports  
+        .clk_out1(o_clockWizzard),
+        // Status and control signals               
+        .reset(resetGral), 
+        .locked(o_locked),
+        // Clock in ports
+        .clk_in1(clockCustom)
+	);
 	
-    always @(posedge clockCustom)
+    always @(posedge o_clockWizzard)
 	begin
-	    /*if(resetGral==1'b1)
-	       begin
-	           dataA <= {dataLength{1'b0}};	
-               dataB <= {dataLength{1'b0}};
-               OPCODE <= {dataLength{1'b0}};
-	       end
-	    else
-	       begin*/
-            if (button1 == 1'b1) begin//&& o_locked saco esto de todos los ifs else ifs
-                dataA <= switch;			
-            end
-            else if (button2 == 1'b1) begin
-                dataB <= switch;			
-            end
-            else if (button3 == 1'b1) begin
-                OPCODE <= switch;
-            end
-            else begin
-                dataA <= dataA;	
-                dataB <= dataB;
-                OPCODE <= OPCODE;
-            end
-        //end
+	        /*if (resetGral) begin// ojo con el negado!!! 
+                reg_dataA <= 0;
+                reg_dataB <= 0;
+                reg_OPCODE <= 0;
+            end*/ 
+            //else begin
+                if (button1 == 1 && button2==0 && button3==0 && o_locked) begin//&& o_locked saco esto de todos los ifs else ifs
+                    reg_dataA <= switch;
+                    reg_dataB <= reg_dataB;
+                    reg_OPCODE <= reg_OPCODE;					
+                end
+                else if (button1 == 0 && button2==1 && button3==0 && o_locked) begin
+                    reg_dataA <= reg_dataA;
+                    reg_dataB <= switch;
+                    reg_OPCODE <= reg_OPCODE;		
+                end
+                else if (button1 == 0 && button2==0 && button3==1 && o_locked) begin
+                    reg_dataA <= reg_dataA;
+                    reg_dataB <= reg_dataB;
+                    reg_OPCODE <= switch;
+                end
+                else begin
+                    reg_dataA <= reg_dataA;
+                    reg_dataB <= reg_dataB;
+                    reg_OPCODE <= reg_OPCODE;
+                end
+            //end  
 	end
-    
+	
+assign wire_dataA=reg_dataA;
+assign wire_dataB=reg_dataB;
+assign wire_OPCODE=reg_OPCODE;
+ 
 endmodule
