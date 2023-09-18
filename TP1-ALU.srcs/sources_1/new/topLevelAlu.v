@@ -51,12 +51,12 @@ module topLevelAlu(
 	
     always @(posedge o_clockWizzard)
 	begin
-	        /*if (resetGral) begin// ojo con el negado!!! 
+	        if (resetGral==1 && button1 == 0 && button2==0 && button3==0) begin
                 reg_dataA <= 0;
                 reg_dataB <= 0;
                 reg_OPCODE <= 0;
-            end*/ 
-            //else begin
+            end 
+            else begin
                 if (button1 == 1 && button2==0 && button3==0 && o_locked) begin//&& o_locked saco esto de todos los ifs else ifs
                     reg_dataA <= switch;
                     reg_dataB <= reg_dataB;
@@ -77,7 +77,7 @@ module topLevelAlu(
                     reg_dataB <= reg_dataB;
                     reg_OPCODE <= reg_OPCODE;
                 end
-            //end  
+            end  
 	end
 	
 assign wire_dataA=reg_dataA;
